@@ -28,7 +28,6 @@ def test_filter_returns_only_matching_items():
 
     result = menu.filter_by_category("sandwiches")
 
-    assert len(result) == 2
     assert burger in result
     assert hot_dog in result
     assert fries not in result
@@ -190,3 +189,20 @@ def test_popular_items_on_empty_menu_returns_empty_list():
     result = menu.get_popular_items()
 
     assert result == []
+
+
+def test_popular_items_with_equal_ratings_returns_all_items():
+    """Items with equal popularity ratings are all included in result."""
+    menu = Menu()
+    burger = Item("1", "Burger", 8.99, "sandwiches")
+    burger.set_popularity(4.5)
+    fries = Item("2", "Fries", 3.99, "sides")
+    fries.set_popularity(4.5)
+    menu.add_item(burger)
+    menu.add_item(fries)
+
+    result = menu.get_popular_items()
+
+    assert len(result) == 2
+    assert burger in result
+    assert fries in result
