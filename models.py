@@ -58,10 +58,7 @@ class Customer:
         return self.purchase_history
 
     def get_total_spent(self) -> float:
-        total = 0.0
-        for transaction in self.purchase_history:
-            total += transaction.calculate_total()
-        return total
+        return sum(transaction.calculate_total() for transaction in self.purchase_history)
 
 
 class Transaction:
@@ -83,10 +80,7 @@ class Transaction:
         return self.items_ordered
 
     def calculate_total(self) -> float:
-        total = 0.0
-        for item in self.items_ordered:
-            total += item.get_price()
-        return total
+        return sum(item.get_price() for item in self.items_ordered)
 
     def get_item_count(self) -> int:
         return len(self.items_ordered)
